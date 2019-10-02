@@ -126,6 +126,32 @@ class Tree:
          return (True, True, node.val)
       return (f1, f2, None)
 
+  def _pair(self, node1, node2):
+       node1.r = node2
+       node2.l = node1 
+
+  def _dll(self, node):
+      left = None
+      right = None 
+      if node.l is not None:
+           left = _dll(node.l)
+      if node.r is not None:
+           right = _dll(node.r)
+      if left is None and right is None:
+           return (node, node)
+      if left is None:
+           _pair(node, right[0])
+           return (node, right[1])
+      if right is None:
+          _pair(node, left[0])
+          return (node, left[1])
+      _pair(node, left[0])
+      _pair(left[1], right[0])
+      return (node, right[1])     
+
+  def dll(self):
+      return _dll(self.root)[0]
+
 x = int(sys.argv[1])
 y = int(sys.argv[2])
 lst = np.array(sys.argv[3:], dtype=int)
